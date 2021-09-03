@@ -1,0 +1,160 @@
+{
+	"name": "lsio-projects",
+	"displayName": "projects",
+	"publisher": "LachlanSleight",
+	"description": "A simple, no-nonsense list of projects that you regularly work on",
+	"version": "1.0.0",
+	"engines": {
+		"vscode": "^1.60.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onView:projects"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "lsio-projects.addProject",
+				"title": "Add Project",
+				"icon": {
+					"light": "media/plus-light.svg",
+					"dark": "media/plus-dark.svg"
+				}
+			},
+			{
+				"command": "lsio-projects.deleteProject",
+				"title": "Delete Project",
+				"icon": {
+					"light": "media/trash.svg",
+					"dark": "media/trash.svg"
+				}
+			},
+			{
+				"command": "lsio-projects.openProject",
+				"title": "Open Project"
+			},
+			{
+				"command": "lsio-projects.nav.moveProjectUp",
+				"title": "Move Project Up",
+				"icon": {
+					"light": "media/arrow_up_light.svg",
+					"dark": "media/arrow_up_light.svg"
+				}
+			},
+			{
+				"command": "lsio-projects.nav.moveProjectDown",
+				"title": "Move Project Down",
+				"icon": {
+					"light": "media/arrow_down_light.svg",
+					"dark": "media/arrow_down_light.svg"
+				}
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "lsio-projects",
+					"title": "Projects",
+					"icon": "media/code.svg"
+				}
+			]
+		},
+		"views": {
+			"lsio-projects": [
+				{
+					"id": "projects",
+					"name": "Projects",
+					"icon": "media/code.svg",
+					"contextualTitle": "Projects"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "projects",
+				"contents": "No projects have been added.\n[Add First project!](command:lsio-projects.addProject)"
+			}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "lsio-projects.addProject",
+					"when": "view == projects",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "lsio-projects.nav.moveProjectDown",
+					"when": "view == projects",
+					"group": "inline"
+				},
+				{
+					"command": "lsio-projects.nav.moveProjectUp",
+					"when": "view == projects",
+					"group": "inline"
+				},
+				{
+					"command": "lsio-projects.deleteProject",
+					"when": "view == projects",
+					"group": "inline"
+				},
+				{
+					"command": "lsio-projects.openProject",
+					"when": "view == projects"
+				}
+			]
+		},
+		"configuration": {
+			"title": "Projects",
+			"properties": {
+				"lsio-projects.paths": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"path": {
+								"type": "string"
+							},
+							"name": {
+								"type": "string"
+							}
+						}
+					},
+					"default": [],
+					"description": "The list of projects that appear in the projects window"
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run package",
+		"compile": "webpack",
+		"watch": "webpack --watch",
+		"package": "webpack --mode production --devtool hidden-source-map",
+		"test-compile": "tsc -p ./",
+		"test-watch": "tsc -watch -p ./",
+		"pretest": "npm run test-compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.60.0",
+		"@types/glob": "^7.1.3",
+		"@types/mocha": "^8.2.2",
+		"@types/node": "14.x",
+		"eslint": "^7.27.0",
+		"@typescript-eslint/eslint-plugin": "^4.26.0",
+		"@typescript-eslint/parser": "^4.26.0",
+		"glob": "^7.1.7",
+		"mocha": "^8.4.0",
+		"typescript": "^4.3.2",
+		"vscode-test": "^1.5.2",
+		"ts-loader": "^9.2.2",
+		"webpack": "^5.38.1",
+		"webpack-cli": "^4.7.0"
+	}
+}
