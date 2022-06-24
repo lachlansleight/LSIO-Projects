@@ -39,6 +39,18 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		vscode.commands.executeCommand('vscode.openFolder', vscode.Uri.file(project.path));
 	});
+	vscode.commands.registerCommand('lsio-projects.renameProject', async (project: Project) => {
+		const newName = await vscode.window.showInputBox({
+			placeHolder: "Provide a name",
+			prompt: "New name",
+			value: project.label
+		}) || "";
+		if(newName === ""){
+			vscode.window.showErrorMessage('Please provide some name for this action');
+		} else {
+			projectsProvider.renameProject(project, newName);
+		}
+	});
 }
 
 // this method is called when your extension is deactivated

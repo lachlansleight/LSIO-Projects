@@ -34,6 +34,11 @@ export class ProjectsNodeProvider implements vscode.TreeDataProvider<Project> {
                 command: 'lsio-projects.openProject',
                 title: '',
                 arguments: [p]
+            },
+            {
+                command: 'lsio-projects.renameProject',
+                title: '',
+                arguments: [p]
             }
         ));
 
@@ -59,6 +64,18 @@ export class ProjectsNodeProvider implements vscode.TreeDataProvider<Project> {
             return;
         }
         const newProjectConfigs = [...projectConfigs, {name, path}];
+        config.update("paths", newProjectConfigs, vscode.ConfigurationTarget.Global).then(() => this.refresh());
+    }
+
+    public renameProject(project: Project, newName: string) {
+        const config = vscode.workspace.getConfiguration("lsio-projects");
+        const projectConfigs: ProjectConfig[] = (config.get("paths") || []);
+        const newProjectConfigs = projectConfigs.map((p) => {
+            if(p.path == project.path) {
+                p.name = newName;
+            }
+            return p;
+        });
         config.update("paths", newProjectConfigs, vscode.ConfigurationTarget.Global).then(() => this.refresh());
     }
 
@@ -97,7 +114,8 @@ export class Project extends vscode.TreeItem {
 		public readonly label: string,
         public readonly path: string,
 		public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-		public readonly command?: vscode.Command
+		public readonly command?: vscode.Command,
+		public readonly command2?: vscode.Command
 	) {
 		super(label, collapsibleState);
 
