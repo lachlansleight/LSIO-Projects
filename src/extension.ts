@@ -41,9 +41,9 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 	vscode.commands.registerCommand('lsio-projects.renameProject', async (project: Project) => {
 		const newName = await vscode.window.showInputBox({
-			placeHolder: project.label,
-			prompt: "New name"
-			// value: ""
+			placeHolder: "Provide a name",
+			prompt: "New name",
+			value: project.label
 		}) || "";
 		if(newName === ""){
 			vscode.window.showErrorMessage('Please provide some name for this action');
