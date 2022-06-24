@@ -51,6 +51,10 @@
 					"light": "media/arrow_down_light.svg",
 					"dark": "media/arrow_down_light.svg"
 				}
+			},
+			{
+				"command": "lsio-projects.renameProject",
+				"title": "Rename Project"
 			}
 		],
 		"viewsContainers": {
@@ -104,6 +108,10 @@
 				},
 				{
 					"command": "lsio-projects.openProject",
+					"when": "view == projects"
+				},
+				{
+					"command": "lsio-projects.renameProject",
 					"when": "view == projects"
 				}
 			]
